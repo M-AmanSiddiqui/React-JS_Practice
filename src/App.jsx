@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Todoprovider } from './context'
+import { preview } from 'vite'
 
 function App() {
   const [todos, setTodos] = useState([])
@@ -10,6 +11,15 @@ function App() {
   const updateTodo = (id,todo) => {
     setTodos((prev) => prev.map((prevTodo) => (prevTodo.id === id ? todo : prevTodo )))
   }
+const deleteTodo = (id) => {
+  setTodos((prev) => prev.filter((todo) => todo.id !== id))
+}
+
+const toggleComplete = (id) => {
+  setTodos((prev) => prev.map((prevTodo) => prevTodo === id ? {...prevTodo, completed: !prevTodo.completed} :  preview ))
+}
+
+
 
   return (
     <Todoprovider value={{todos,addTodo,updateTodo,deleteTodo,toggleComplete}}>
