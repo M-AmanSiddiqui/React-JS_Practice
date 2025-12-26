@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { Todoprovider } from './context'
-import { preview } from 'vite'
+import TodoForm from './components/Todoform'
 import { TodoItem } from './components'
 
 function App() {
@@ -17,8 +17,15 @@ const deleteTodo = (id) => {
 }
 
 const toggleComplete = (id) => {
-  setTodos((prev) => prev.map((prevTodo) => prevTodo === id ? {...prevTodo, completed: !prevTodo.completed} :  preview ))
+  setTodos((prev) =>
+    prev.map((prevTodo) =>
+      prevTodo.id === id
+        ? { ...prevTodo, completed: !prevTodo.completed }
+        : prevTodo
+    )
+  )
 }
+
 
 useEffect(() => {
   const todos = JSON.parse(localStorage.getItem("todos"))
@@ -43,11 +50,12 @@ useEffect(() => {
                         <TodoForm />
                     </div>
                     <div className="flex flex-wrap gap-y-3">
-                        {todos.map((todo) => (
-                          <div key={todo.id} className='w-full'>
-                            <TodoItem />
-                             </div>
-                        ))}
+                       {todos.map((todo) => (
+  <div key={todo.id} className="w-full">
+    <TodoItem todo={todo} />
+  </div>
+))}
+
                     </div>
                 </div>
             </div>
